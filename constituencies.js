@@ -1,14 +1,4 @@
-var elasticsearch=require('elasticsearch');
-var getJSON = require('get-json');
-
-var client=new elasticsearch.Client( {
-  hosts: [
-    'https://[username]:[password]@[server_name]:[port]/',
-    'https://[username]:[password]@[server_name]:[port]/'
-  ],
-  maxSockets:50
-});
-
+var client = require('./connection.js');
 var inputfile = require("./constituencies.json");
 var bulk = [];
 
