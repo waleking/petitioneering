@@ -4,8 +4,6 @@ var bulk = [];
 
 var makebulk = function(constituencylist,callback){
   for (var current in constituencylist){
-    console.log(constituencylist[current].ConstituencyName);
-
     bulk.push(
       { index: {_index: 'gov', _type: 'constituencies', _id: constituencylist[current].PANO } },
       {
@@ -41,7 +39,7 @@ var indexall = function(madebulk,callback) {
 }
 
 makebulk(inputfile,function(response){
-  console.log("made bulk");
+  console.log("Bulk content prepared");
   indexall(response,function(response){
     console.log(response);
   })
