@@ -64,14 +64,14 @@ function results (constitLookup,callback) {
         console.log("search error: "+error)
       }
       else {
-        makehtmllist(constitLookup,response.hits.hits,function(response){
+        makeHtmlList(constitLookup,response.hits.hits,function(response){
           callback(response);
         });
       }
     });
 }
 
-function getconstituency(postcode,callback) {
+function getConstituency(postcode,callback) {
   getJSON('https://api.postcodes.io/postcodes/'+postcode, function(error, response){
     if(error) {
       console.log(error);
@@ -86,10 +86,10 @@ function getconstituency(postcode,callback) {
   });
 }
 
-function validatepc(postcode, callback) {
+function validatePostcode(postcode, callback) {
   getJSON('https://api.postcodes.io/postcodes/'+postcode+'/validate',function(error,response){
       if(response.result){
-        getconstituency(postcode,function(response){
+        getConstituency(postcode,function(response){
           callback(response);
         });
       }
@@ -99,14 +99,14 @@ function validatepc(postcode, callback) {
   });
 }
 
-function getresults(userinput, cb) {
+function getResults(userinput, cb) {
   console.log("results starting...");
-  var results = validatepc(userinput,function(response){
+  var results = validatePostcode(userinput,function(response){
     cb(response);
   });
 }
 
-function makehtmllist(constituency,results,callback) {
+function makeHtmlList(constituency,results,callback) {
   var htmllist = '<h2>Results for '+constituency+'</h2><ol class="petition-results">';
   results.forEach(function(petitiondetails){
     htmllist+='<li><span class="list-item-head"><a href="https://petition.parliament.uk/petitions/'+petitiondetails._id+'">'+petitiondetails.fields.action+'</a></span><span class="list-item-info">'+petitiondetails.sort[1]+' signatures from a total of '+petitiondetails.fields.signature_count+' </span></li>';
@@ -115,7 +115,7 @@ function makehtmllist(constituency,results,callback) {
   callback(htmllist);
 }
 
-function getconstituencies(callback){
+function getConstituencies(callback){
   client.search({
     index: 'gov',
     type: 'constituencies',
@@ -134,11 +134,11 @@ function getconstituencies(callback){
         console.log("search error: "+error)
       }
       if (response){
-        var constitlist = [];
+        var constitList = [];
         response.hits.hits.forEach(function(hit){
-          constitlist.push(hit.fields.constituencyname);
+          constitList.push(hit.fields.constituencyname);
         })
-        callback(constitlist.sort());
+        callback(constitList.sort());
       }
       else {
         console.log("<p>No results</p>");
@@ -148,7 +148,7 @@ function getconstituencies(callback){
 
 
 module.exports = {
-  getresults: getresults,
-  getconstituencies: getconstituencies,
+  getResults: getResults,
+  getConstituencies: getConstituencies,
   results: results
 };

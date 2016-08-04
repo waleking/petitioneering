@@ -1,7 +1,7 @@
 /*eslint-env node*/
 
 //------------------------------------------------------------------------------
-// Petitioneering - based on node.js starter application for Bluemix
+// node.js starter application for Bluemix
 //------------------------------------------------------------------------------
 
 // This application uses express as its web server
@@ -27,16 +27,13 @@ app.listen(appEnv.port, '0.0.0.0', function() {
   console.log("server starting on " + appEnv.url);
 });
 
-// The app's functions are in functions.js
 var functions = require('./functions.js');
 
-// Use Jade (now known as Pug) as the template engine
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/public/views');
 
-// Compile a list of constituencies on page load
 app.get('/', function(request, response) {
-  functions.getconstituencies(function(constituencyList){
+  functions.getConstituencies(function(constituencyList){
     if(constituencyList){
       response.render('index', {
           constituencies: constituencyList
@@ -45,19 +42,18 @@ app.get('/', function(request, response) {
   });
 });
 
-// Respond to a search request from a user
 app.get('/search', function(request, response) {
   if (!request.query.postcode && !request.query.constituency) {
     response.send("<p>Please enter a postcode or parliamentary constituency</p>");
   }
   if (request.query.postcode){
-    functions.getresults(request.query.postcode, function(htmllist) {
-      response.send(htmllist);
+    functions.getResults(request.query.postcode, function(htmlList) {
+      response.send(htmlList);
     });
   }
   if (request.query.constituency) {
-    functions.results(request.query.constituency, function(htmllist){
-      response.send(htmllist);
+    functions.results(request.query.constituency,function(htmlList){
+      response.send(htmlList);
     });
   }
 });
