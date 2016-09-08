@@ -18,8 +18,8 @@ Part 3 looks at nested datatypes and includes a brief introduction to queries. `
 
 Part 4 walks you through how to query on nested fields and sort your results.
 
-### Part 5
+### [Part 5](https://www.compose.com/articles/getting-started-with-elasticsearch-and-node-js-part5/)
 
-In [part 5](https://www.compose.com/articles/getting-started-with-elasticsearch-and-node-js-part5/) we create an application and deploy it using IBM Bluemix. The files in the `app/` directory are not required as you'll be able to create and run your own app by working through this part, but you can refer to the files here for guidance or if you just want to download and explore the app.
+In part 5 we create an application and deploy it using IBM Bluemix. The files in the `app/` directory are not required as you'll be able to create and run your own app by working through this part, but you can refer to the files here for guidance or if you just want to download and explore the app.
 
 To see the app in action you can try our version here: [Petitioneering](http://petitioneering.eu-gb.mybluemix.net/)
