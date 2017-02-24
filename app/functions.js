@@ -5,7 +5,7 @@ function results (constitLookup,callback) {
   client.search({
     index: 'gov',
     type: 'petitions',
-    fields: ['action','signature_count'],
+    _source: ['signature_count','action'],
     body: {
       query: {
         bool: {
@@ -64,7 +64,7 @@ function results (constitLookup,callback) {
         console.log("search error: "+error)
       }
       else {
-        makeHtmlList(constitLookup,response.hits.hits,function(response){
+          makeHtmlList(constitLookup,response.hits.hits,function(response){
           callback(response);
         });
       }
@@ -77,7 +77,6 @@ function getConstituency(postcode,callback) {
       console.log(error);
     }
     else {
-      console.log(response);
       results(response.result.parliamentary_constituency,function(response){
         callback(response);
       });
@@ -109,7 +108,7 @@ function getResults(userinput, cb) {
 function makeHtmlList(constituency,results,callback) {
   var htmllist = '<h2>Results for '+constituency+'</h2><ol class="petition-results">';
   results.forEach(function(petitiondetails){
-    htmllist+='<li><span class="list-item-head"><a href="https://petition.parliament.uk/petitions/'+petitiondetails._id+'">'+petitiondetails.fields.action+'</a></span><span class="list-item-info">'+petitiondetails.sort[1]+' signatures from a total of '+petitiondetails.fields.signature_count+' </span></li>';
+    htmllist+='<li><span class="list-item-head"><a href="https://petition.parliament.uk/petitions/'+petitiondetails._id+'">'+petitiondetails._source.action+'</a></span><span class="list-item-info">'+petitiondetails.sort[1]+' signatures from a total of '+petitiondetails._source.signature_count+' </span></li>';
   })
   htmllist+='</ol>';
   callback(htmllist);
@@ -120,7 +119,7 @@ function getConstituencies(callback){
     index: 'gov',
     type: 'constituencies',
     size: 650,
-    fields: 'constituencyname',
+    _source: 'constituencyname',
     body: {
       sort:
         {
@@ -136,7 +135,7 @@ function getConstituencies(callback){
       if (response){
         var constitList = [];
         response.hits.hits.forEach(function(hit){
-          constitList.push(hit.fields.constituencyname);
+          constitList.push(hit._source.constituencyname);
         })
         callback(constitList.sort());
       }

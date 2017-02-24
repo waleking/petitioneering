@@ -20,16 +20,14 @@ a:hover {
 }
 
 .newappIcon {
-	padding-top: 10%;
-	display: block;
-	margin: 0 auto;
-	padding-bottom: 2em;
+	display: inline;
 	max-width:200px;
 }
 
 h1 {
 	font-weight: bold;
 	font-size: 2em;
+	margin:0;
 }
 
 .leftHalf {
@@ -79,4 +77,3 @@ pre {
 	padding: 0;
 	margin: 0;
 }
-
